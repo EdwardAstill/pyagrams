@@ -1,0 +1,18 @@
+<svg width="500" height="400" xmlns="http://www.w3.org/2000/svg">
+<rect width="500" height="400" fill="white"/>
+<g transform="translate(50,50)">
+<rect width="400" height="300" fill="none" stroke="black" stroke-width="2"/>
+<line x1="50" y1="250" x2="150" y2="250" stroke="gray" stroke-width="1" stroke-dasharray="8,2" stroke-linecap="round"/>
+<line x1="150" y1="250" x2="148.0" y2="250.0" stroke="gray" stroke-width="1"/>
+<path d="M 150 250 Q 144.48507658313164 249.0275702050652 142.48245903371273 247.26383885339465" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 150 250 Q 144.48507658313164 250.9724297949348 142.48245903371273 252.73616114660535" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<line x1="50" y1="250" x2="50" y2="50" stroke="gray" stroke-width="1" stroke-dasharray="8,2" stroke-linecap="round"/>
+<line x1="50" y1="50" x2="50.0" y2="52.0" stroke="gray" stroke-width="1"/>
+<path d="M 50 50 Q 49.02757020506519 55.514923416868356 47.26383885339465 57.51754096628727" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 50 50 Q 50.97242979493481 55.514923416868356 52.73616114660535 57.51754096628727" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<circle cx="70" cy="170" r="0.5" fill="black"/>
+<line x1="60" y1="240" x2="90" y2="180" stroke="gray" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
+<path d="M 90 180 Q 86.66388361990722 184.49781363536516 84.19075654666712 185.50024458546244" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 90 180 Q 88.40341891976355 185.3675812852933 89.08535040362977 187.94754151394378" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+</g>
+</svg>

@@ -1,0 +1,1 @@
+you just have to write the contents of an svg (which can be doesn with text), then when saved as an svg it is the image
