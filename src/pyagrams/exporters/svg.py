@@ -85,11 +85,17 @@ class SVGExporter:
         # Render all objects in order
         for obj in axes.objects:
             if obj[0] == "point":
-                _, size, coords = obj
-                # Convert coordinates to SVG space
-                svg_y = diagram_height - coords[1]
-                svg_x = coords[0]
-                svg_parts.append(f'<circle cx="{svg_x}" cy="{svg_y}" r="{size/2}" fill="black"/>')
+                if len(obj) == 3:
+                    # Old format: ("point", size, coords)
+                    _, size, coords = obj
+                    # Convert coordinates to SVG space
+                    svg_y = diagram_height - coords[1]
+                    svg_x = coords[0]
+                    svg_parts.append(f'<circle cx="{svg_x}" cy="{svg_y}" r="{size/2}" fill="black"/>')
+                else:
+                    # New format: ("point", Point_object)
+                    _, point_obj = obj
+                    svg_parts.append(point_obj.to_svg(diagram_width, diagram_height))
             elif obj[0] == "vector":
                 _, vector = obj
                 svg_parts.append(vector.to_svg(diagram_width, diagram_height))

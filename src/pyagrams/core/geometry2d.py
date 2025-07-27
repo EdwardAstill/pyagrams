@@ -64,6 +64,14 @@ class Point(BaseDrawable):
         super().__init__(**style_kw)
         self.coords = coords
         self.size = size
+        
+        # Labels are empty by default
+    
+    def bbox(self) -> BoundingBox:
+        """Calculate bounding box for the point"""
+        x, y = self.coords
+        radius = self.size / 2
+        return BoundingBox(x - radius, y - radius, x + radius, y + radius)
     
     def add_to(self, axes):
         """Add the point to the axes"""
@@ -72,11 +80,22 @@ class Point(BaseDrawable):
     
     def to_svg(self, diagram_width: float, diagram_height: float) -> str:
         """Generate SVG representation of the point"""
+        svg_parts = []
+        
         # Convert coordinates to SVG space
         svg_y = diagram_height - self.coords[1]
         svg_x = self.coords[0]
         
-        return f'<circle cx="{svg_x}" cy="{svg_y}" r="{self.size/2}" fill="{self.style.color}"/>'
+        # Draw the point
+        svg_parts.append(f'<circle cx="{svg_x}" cy="{svg_y}" r="{self.size/2}" fill="{self.style.color}"/>')
+        
+        # Add label if present
+        if self.label:
+            bbox = self.bbox()
+            label_pos = self._get_label_position(bbox)
+            svg_parts.append(self._generate_label_svg(label_pos, diagram_height))
+        
+        return '\n'.join(svg_parts)
 
 
 class Vector(BaseDrawable):
@@ -94,6 +113,35 @@ class Vector(BaseDrawable):
         self.position = position or [0, 0]  # Starting point of the vector
         self.direction = direction or [10, 10]  # Direction and magnitude
         self.arrow_size = 8  # Size of arrow tip (increased from 5)
+        
+        # Labels are empty by default
+        
+    def bbox(self) -> BoundingBox:
+        """Calculate bounding box for the vector including arrow tip"""
+        start_x, start_y = self.position
+        end_x = start_x + self.direction[0]
+        end_y = start_y + self.direction[1]
+        
+        # Calculate arrow tip points for bounding box
+        if self.direction[0] != 0 or self.direction[1] != 0:
+            angle = np.arctan2(self.direction[1], self.direction[0])
+            arrow_angle = np.pi / 9  # 20 degrees
+            
+            arrow1_x = end_x - self.arrow_size * np.cos(angle - arrow_angle)
+            arrow1_y = end_y - self.arrow_size * np.sin(angle - arrow_angle)
+            
+            arrow2_x = end_x - self.arrow_size * np.cos(angle + arrow_angle)
+            arrow2_y = end_y - self.arrow_size * np.sin(angle + arrow_angle)
+            
+            min_x = min(start_x, end_x, arrow1_x, arrow2_x)
+            max_x = max(start_x, end_x, arrow1_x, arrow2_x)
+            min_y = min(start_y, end_y, arrow1_y, arrow2_y)
+            max_y = max(start_y, end_y, arrow1_y, arrow2_y)
+        else:
+            min_x = max_x = start_x
+            min_y = max_y = start_y
+        
+        return BoundingBox(min_x, min_y, max_x, max_y)
         
     def style(self, line_style):
         """Set vector line style: 'dashed' or 'solid'"""
@@ -175,7 +223,7 @@ class Vector(BaseDrawable):
             
             # Draw arrow tip as curved arcs with round linecaps
             # Create a curved arrow tip using SVG path with arc commands
-            arc_radius = self.arrow_size * 0.3  # Smaller radius for a subtle curve
+            arc_radius = self.arrow_size * 0.3
             
             # First arc from arrow tip to first point
             svg_parts.append(f'<path d="M {end_x} {svg_end_y} '
@@ -192,6 +240,12 @@ class Vector(BaseDrawable):
                            f'{arrow2_x} {svg_arrow2_y}" '
                            f'stroke="{self.style.color}" stroke-width="{self.style.thickness}" '
                            f'stroke-linecap="round" fill="none"/>')
+        
+        # Add label if present
+        if self.label:
+            bbox = self.bbox()
+            label_pos = self._get_label_position(bbox)
+            svg_parts.append(self._generate_label_svg(label_pos, diagram_height))
         
         return '\n'.join(svg_parts)
 
@@ -217,6 +271,21 @@ class Spline(BaseDrawable):
         super().__init__(**style_kw)
         self.points   = [list(p) for p in points]
         self.tangents = [list(v) for v in tangents]
+        
+        # Labels are empty by default
+
+    def bbox(self) -> BoundingBox:
+        """Calculate bounding box for the spline"""
+        if not self.points:
+            return BoundingBox(0, 0, 0, 0)
+        
+        x_coords = [p[0] for p in self.points]
+        y_coords = [p[1] for p in self.points]
+        
+        return BoundingBox(
+            min(x_coords), min(y_coords),
+            max(x_coords), max(y_coords)
+        )
 
     # ─────────────────────────────────────────────────────────── public helpers
     def style(self, line_style):
@@ -254,6 +323,8 @@ class Spline(BaseDrawable):
         Points **must already be absolute** when this is called
         (Axes.add_spline below takes care of that).
         """
+        svg_parts = []
+        
         P  = self.points          # absolute anchors
         m  = self.tangents        # corresponding gradients
 
@@ -280,6 +351,14 @@ class Spline(BaseDrawable):
 
         # Use style for appearance
         d_attr = " ".join(cmds)
-        return (f'<path d="{d_attr}" stroke="{self.style.color}" '
+        svg_parts.append(f'<path d="{d_attr}" stroke="{self.style.color}" '
                 f'stroke-width="{self.style.thickness}" stroke-dasharray="{self.style.dasharray}" '
-                f'stroke-linecap="round" fill="none"/>') 
+                f'stroke-linecap="round" fill="none"/>')
+        
+        # Add label if present
+        if self.label:
+            bbox = self.bbox()
+            label_pos = self._get_label_position(bbox)
+            svg_parts.append(self._generate_label_svg(label_pos, diagram_h))
+        
+        return '\n'.join(svg_parts) 

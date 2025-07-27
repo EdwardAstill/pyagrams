@@ -25,14 +25,30 @@ def main():
     
     # Create axes with position and size
     axes = pyagrams.axes([50, 50], [100, 200])
-    axes.add_point(1, [20, 80])  # Point at (20, 80) relative to axes origin
-    # axes.add_ticks(10, length=8, color="black", placement="middle")
     
-    # Add vector to axes with relative coordinates [0, 0] means starting at axes origin
-    axes.add_vector([10, 10], [30, 60])  # Vector starting at (10, 10) relative to axes origin
+    # Add point using the new object-based approach
+    point = pyagrams.Point(1, [20, 80])
+    axes.add_object(point)
+    
+    # Add vector with position vector for label placement
+    vector = pyagrams.Vector([10, 10], [30, 60])
+    vector.set_label("v", [0, -15])  # Position label 15 pixels below center
+    axes.add_object(vector)
+    
+    # Add another vector with different position vector
+    vector2 = pyagrams.Vector([80, 10], [20, 40])
+    vector2.set_label("w", [15, 0])  # Position label 15 pixels to the right of center
+    axes.add_object(vector2)
+    
+    # Add a third vector with diagonal offset
+    vector3 = pyagrams.Vector([40, 80], [25, -30])
+    vector3.set_label("u", [10, 10])  # Position label 10 pixels right and 10 pixels up from center
+    axes.add_object(vector3)
+    
     points = [[10,10],[50,20],[100,10]]
     vects = [[1,1],[1,-1],[-1,0]]
     curve = pyagrams.Spline(points, vects)
+    curve.set_label("Curved Path", [-20, 0])  # Position label 20 pixels to the left of center
     axes.add_object(curve)
     
     #you should be able to axes.add_object(object) or you use axes.add_<object_name>(object_parameters)

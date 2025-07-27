@@ -84,16 +84,45 @@ class Axes:
         """Generic method to add any object to the axes. 
         Automatically determines the object type and calls the appropriate specific method."""
         if isinstance(obj, Point):
-            return self.add_point(obj.size, obj.coords)
-        elif isinstance(obj, Vector):
-            # For vectors, we need to convert absolute position to relative
-            relative_position = [
-                obj.position[0] - self.position[0],
-                obj.position[1] - self.position[1]
+            # Create a new point with the same properties but adjusted coordinates
+            absolute_coords = [
+                self.position[0] + obj.coords[0],
+                self.position[1] + obj.coords[1]
             ]
-            return self.add_vector(relative_position, obj.direction)
+            new_point = Point(obj.size, absolute_coords)
+            # Copy label and style from original object
+            if obj.label:
+                new_point.set_label(obj.label, obj.label_position)
+            new_point.style = obj.style
+            self.objects.append(("point", new_point))
+            return new_point
+        elif isinstance(obj, Vector):
+            # For vectors, the position should already be relative to axes origin
+            # So we just need to convert it to absolute by adding axes origin
+            absolute_position = [
+                self.position[0] + obj.position[0],
+                self.position[1] + obj.position[1]
+            ]
+            # Create a new vector with absolute position
+            new_vector = Vector(absolute_position, obj.direction)
+            # Copy label and style from original object
+            if obj.label:
+                new_vector.set_label(obj.label, obj.label_position)
+            new_vector.style = obj.style
+            new_vector.style.line_style = "solid"  # Override default dashed style for axes vectors
+            self.objects.append(("vector", new_vector))
+            return new_vector
         elif isinstance(obj, Spline):
-            return self.add_spline(obj)
+            # Create a copy of the spline with adjusted points
+            abs_pts = [[self.position[0] + p[0],
+                        self.position[1] + p[1]] for p in obj.points]
+            new_spline = Spline(abs_pts, obj.tangents)
+            # Copy label and style from original object
+            if obj.label:
+                new_spline.set_label(obj.label, obj.label_position)
+            new_spline.style = obj.style
+            self.objects.append(("spline", new_spline))
+            return new_spline
         else:
             raise TypeError(f"Unsupported object type: {type(obj)}. "
                           f"Supported types are Point, Vector, and Spline.")

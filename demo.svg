@@ -14,6 +14,16 @@
 <line x1="60" y1="240" x2="90" y2="180" stroke="black" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
 <path d="M 90 180 Q 86.66388361990722 184.49781363536516 84.19075654666712 185.50024458546244" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
 <path d="M 90 180 Q 88.40341891976355 185.3675812852933 89.08535040362977 187.94754151394378" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<text x="75.0" y="225.0" text-anchor="middle" dominant-baseline="middle" font-family="Times New Roman, Georgia, serif" font-size="8" fill="black">v</text>
+<line x1="130" y1="240" x2="150" y2="200" stroke="black" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
+<path d="M 150 200 Q 146.6638836199072 204.49781363536516 144.1907565466671 205.50024458546244" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 150 200 Q 148.40341891976354 205.3675812852933 149.08535040362977 207.94754151394378" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<text x="155.0" y="220.0" text-anchor="middle" dominant-baseline="middle" font-family="Times New Roman, Georgia, serif" font-size="8" fill="black">w</text>
+<line x1="90" y1="170" x2="115" y2="200" stroke="black" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
+<path d="M 115 200 Q 112.21647332455997 195.14078409132566 112.28936476677404 192.47321737842827" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 115 200 Q 110.72239080179311 196.38585286029803 108.08541033231447 195.97651274047792" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<text x="112.5" y="175.0" text-anchor="middle" dominant-baseline="middle" font-family="Times New Roman, Georgia, serif" font-size="8" fill="black">u</text>
 <path d="M 60 240 C 73.74368541872553 226.25631458127447 86.25631458127447 216.25631458127447 100 230 C 116.99673171197595 246.99673171197594 166.99673171197594 240.0 150 240" stroke="black" stroke-width="1" stroke-dasharray="none" stroke-linecap="round" fill="none"/>
+<text x="85.0" y="235.0" text-anchor="middle" dominant-baseline="middle" font-family="Times New Roman, Georgia, serif" font-size="8" fill="black">Curved Path</text>
 </g>
 </svg>
