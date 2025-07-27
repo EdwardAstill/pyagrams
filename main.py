@@ -30,8 +30,8 @@ def main():
     
     # Add vector to axes with relative coordinates [0, 0] means starting at axes origin
     axes.add_vector([10, 10], [30, 60])  # Vector starting at (10, 10) relative to axes origin
-    points = [[10,10],[50,20]]
-    vects = [[1,1],[1,-1]]
+    points = [[10,10],[50,20],[100,10]]
+    vects = [[1,1],[1,-1],[-1,0]]
     curve = pyagrams.Spline(points, vects)
     axes.add_object(curve)
     

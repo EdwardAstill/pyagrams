@@ -3,7 +3,9 @@ PyAgrams - Simple Python diagramming library
 """
 
 from .figure import Figure
-from .diagram import Diagram, Axes, Point, Vector, Spline
+from .scene.diagram import Diagram
+from .scene.axes import Axes
+from .core.geometry2d import Point, Vector, Spline
 
 # Create module-level instances for convenient access
 figure = Figure()

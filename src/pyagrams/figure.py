@@ -1,6 +1,8 @@
 """
 Figure class - Main container for diagrams with title, size, and SVG output
 """
+from .exporters import SVGExporter
+
 
 class Figure:
     def __init__(self):
@@ -21,24 +23,23 @@ class Figure:
         return self
     
     def to_svg(self):
-        """Generate SVG representation of the figure"""
-        svg_parts = []
-        
-        # SVG header
-        svg_parts.append(f'<svg width="{self._width}" height="{self._height}" xmlns="http://www.w3.org/2000/svg">')
-        
-        # Background
-        svg_parts.append(f'<rect width="{self._width}" height="{self._height}" fill="white"/>')
-        
-        # Render all diagrams
-        for diagram in self._diagrams:
-            svg_parts.append(diagram.to_svg())
-        
-        svg_parts.append('</svg>')
-        
-        return '\n'.join(svg_parts)
+        """Generate SVG representation of the figure (legacy method)"""
+        exporter = SVGExporter()
+        return exporter.figure_to_svg(self)
     
-    def save(self, filename):
-        """Save figure as SVG file"""
-        with open(filename, 'w') as f:
-            f.write(self.to_svg()) 
+    def save(self, filename, backend="svg"):
+        """Save figure to file with specified backend"""
+        if backend == "svg":
+            exporter = SVGExporter()
+            exporter.export(self, filename)
+        else:
+            raise ValueError(f"Unsupported backend: {backend}. Currently only 'svg' is supported.")
+            
+        # TODO: Add support for other backends like PDF in the future
+    
+    def title(self, title_text, position=None):
+        """Add title to figure (compatibility method)"""
+        # For now, just store the title - could be rendered later
+        self._title = title_text
+        self._title_position = position or [self._width // 2, 30]
+        return self 
