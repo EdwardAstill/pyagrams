@@ -11,8 +11,9 @@
 <path d="M 50 50 Q 49.02757020506519 55.514923416868356 47.26383885339465 57.51754096628727" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
 <path d="M 50 50 Q 50.97242979493481 55.514923416868356 52.73616114660535 57.51754096628727" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
 <circle cx="70" cy="170" r="0.5" fill="black"/>
-<line x1="60" y1="240" x2="90" y2="180" stroke="gray" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
-<path d="M 90 180 Q 86.66388361990722 184.49781363536516 84.19075654666712 185.50024458546244" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
-<path d="M 90 180 Q 88.40341891976355 185.3675812852933 89.08535040362977 187.94754151394378" stroke="gray" stroke-width="1" stroke-linecap="round" fill="none"/>
+<line x1="60" y1="240" x2="90" y2="180" stroke="black" stroke-width="1" stroke-dasharray="none" stroke-linecap="round"/>
+<path d="M 90 180 Q 86.66388361990722 184.49781363536516 84.19075654666712 185.50024458546244" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 90 180 Q 88.40341891976355 185.3675812852933 89.08535040362977 187.94754151394378" stroke="black" stroke-width="1" stroke-linecap="round" fill="none"/>
+<path d="M 60 240 C 73.74368541872553 226.25631458127447 86.25631458127447 216.25631458127447 100 230" stroke="black" stroke-width="2" stroke-dasharray="none" stroke-linecap="round" fill="none"/>
 </g>
 </svg>
